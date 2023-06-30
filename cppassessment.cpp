@@ -33,14 +33,18 @@ public:
 class customQueue {
 private:
     queue<Message*> q;
+    unordered_set<string> clientIds;
+    unordered_set<string> serverIds;
 
 public:
     void enqueue(ServerResponse* e) {
         q.push(e);
+        serverIds.insert(e->serverId);
     }
 
     void enqueue(ClientRequest* e) {
         q.push(e);
+        clientIds.insert(e->clientId);
     }
 
     void dequeue() {
@@ -51,6 +55,14 @@ public:
 
     string getFront() {
         return "";
+    }
+
+    unsigned int getCountClients() {
+        return clientIds.size();
+    }
+
+    unsigned int getCountServers() {
+        return serverIds.size();
     }
 };
 
