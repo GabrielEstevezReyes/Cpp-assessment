@@ -1,5 +1,7 @@
 #include <iostream>
 #include <queue>
+#include <unordered_set>
+#include <string>
 using namespace std;
 
 class Message {
@@ -49,11 +51,30 @@ public:
 
     void dequeue() {
         if (!q.empty()) {
+            Message* front = q.front();
+            if (dynamic_cast<ClientRequest*>(front)) {
+                clientIds.erase(static_cast<ClientRequest*>(front)->clientId);
+            }
+            else if (dynamic_cast<ServerResponse*>(front)) {
+                serverIds.erase(static_cast<ServerResponse*>(front)->serverId);
+            }
+            q.pop();
             q.pop();
         }
     }
 
     string getFront() {
+        if (!q.empty()) {
+            Message* front = q.front();
+            if (dynamic_cast<ClientRequest*>(front)) {
+                ClientRequest* request = static_cast<ClientRequest*>(front);
+                return request->messageId + " " + request->clientId + " " + to_string(request->requestTime);
+            }
+            else if (dynamic_cast<ServerResponse*>(front)) {
+                ServerResponse* response = static_cast<ServerResponse*>(front);
+                return response->messageId + " " + response->serverId + " " + response->metadata;
+            }
+        }
         return "";
     }
 
