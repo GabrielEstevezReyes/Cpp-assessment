@@ -7,25 +7,26 @@ using namespace std;
 class Message {
 public:
     string messageId;
-    Message(){}
+    Message() {}
+    virtual ~Message() {}
 };
 
-class ServerResponse : public Message{
+class ServerResponse : public Message {
 public:
     string serverId;
     string metadata;
-    ServerResponse(string messageId, string serverId, string metadata){
+    ServerResponse(string messageId, string serverId, string metadata) {
         this->messageId = messageId;
         this->serverId = serverId;
         this->metadata = metadata;
     }
 };
 
-class ClientRequest : public Message{
+class ClientRequest : public Message {
 public:
     string clientId;
     int requestTime;
-    ClientRequest(string messageId, string clientId, int requestTime){
+    ClientRequest(string messageId, string clientId, int requestTime) {
         this->messageId = messageId;
         this->clientId = clientId;
         this->requestTime = requestTime;
@@ -58,7 +59,6 @@ public:
             else if (dynamic_cast<ServerResponse*>(front)) {
                 serverIds.erase(static_cast<ServerResponse*>(front)->serverId);
             }
-            q.pop();
             q.pop();
         }
     }
@@ -100,5 +100,6 @@ int main() {
     queue.dequeue();
 
     cout << queue.getFront() << endl;
+
     return 0;
 }
