@@ -67,6 +67,17 @@ public:
 };
 
 int main() {
+    customQueue queue;
+    queue.enqueue(new ClientRequest("m1", "C1", 10));
+    queue.enqueue(new ServerResponse("m2", "S1", "4bytes,1second"));
+    queue.enqueue(new ClientRequest("m3", "C2", 15));
 
+    cout << queue.getCountClients() << endl;
+    cout << queue.getCountServers() << endl;
+    cout << queue.getFront() << endl;
+
+    queue.dequeue();
+
+    cout << queue.getFront() << endl;
     return 0;
 }
