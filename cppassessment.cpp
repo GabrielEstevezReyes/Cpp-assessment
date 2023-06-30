@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 using namespace std;
 
 class Message {
@@ -26,6 +27,30 @@ public:
         this->messageId = messageId;
         this->clientId = clientId;
         this->requestTime = requestTime;
+    }
+};
+
+class customQueue {
+private:
+    queue<Message*> q;
+
+public:
+    void enqueue(ServerResponse* e) {
+        q.push(e);
+    }
+
+    void enqueue(ClientRequest* e) {
+        q.push(e);
+    }
+
+    void dequeue() {
+        if (!q.empty()) {
+            q.pop();
+        }
+    }
+
+    string getFront() {
+        return "";
     }
 };
 
